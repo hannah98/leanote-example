@@ -1,0 +1,18 @@
+version: '3.2'
+services:
+    mongo:
+        image: mongo:3.2.3
+        volumes:
+            - db_data:/data/db
+    popdb:
+        depends_on:
+            - mongo
+        image: furiousgeorge/leanote-populatedb:latest
+    leanote:
+        depends_on:
+            - mongo
+        image: furiousgeorge/leanote:latest
+        ports:
+            - "80:9000"
+volumes:
+    db_data:
