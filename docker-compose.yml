@@ -21,6 +21,8 @@ services:
             - mongo
         ports:
             - "80:9000"
+        volumes:
+             - ./app.conf:/src/leanote/conf/app.conf
 networks:
     mongo:
 volumes:
