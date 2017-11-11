@@ -2,17 +2,26 @@ version: '3.2'
 services:
     mongo:
         image: mongo:3.2.3
+        container_name: db
         volumes:
             - db_data:/data/db
+        networks:
+            - mongo
     popdb:
         depends_on:
             - mongo
         image: furiousgeorge/leanote-populatedb:latest
+        networks:
+            - mongo
     leanote:
         depends_on:
-            - mongo
+            - popdb
         image: furiousgeorge/leanote:latest
+        networks:
+            - mongo
         ports:
             - "80:9000"
+networks:
+    mongo:
 volumes:
     db_data:
